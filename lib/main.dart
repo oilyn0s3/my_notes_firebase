@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:my_notes/components/input_fields.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'Fire';
 
 void main() {
   runApp(const MainApp());
@@ -27,19 +30,35 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _userIdInput = TextEditingController();
+  final _usernameInput = TextEditingController();
 
   final _passwordInput = TextEditingController();
 
   @override
   void dispose() {
-    _userIdInput.dispose();
+    _usernameInput.dispose();
     _passwordInput.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      ),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            return formInputs();
+          default:
+            return const Text("Loading...");
+        }
+      },
+    );
+  }
+
+  Padding formInputs() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
@@ -65,12 +84,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                inputField(_userIdInput, "Username or Email"),
+                usernameField(_usernameInput, "Username or Email"),
                 const SizedBox(height: 20),
-                inputField(_passwordInput, "Password"),
+                passwordField(_passwordInput, "Password"),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final email = _usernameInput.text;
+                    final password = _passwordInput.text;
+
+                    final userCredential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                    print(userCredential);
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
@@ -86,37 +115,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ],
             )
           ],
-        ),
-      ),
-    );
-  }
-
-  TextField inputField(
-    TextEditingController controller,
-    String hint,
-  ) {
-    return TextField(
-      controller: controller,
-      cursorColor: Colors.purple,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle:
-            TextStyle(fontSize: 15, color: Colors.purple.withOpacity(0.7)),
-        fillColor: Colors.purple.shade50,
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            width: 2,
-            color: Colors.purple.withOpacity(0.4),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            width: 2,
-            color: Colors.purple,
-          ),
         ),
       ),
     );
