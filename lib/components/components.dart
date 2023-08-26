@@ -80,7 +80,10 @@ ElevatedButton button(String label, VoidCallback onPressed) {
     ),
     child: Text(
       label,
-      style: const TextStyle(fontSize: 16),
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
     ),
   );
 }

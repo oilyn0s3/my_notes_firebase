@@ -24,18 +24,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Login",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.purple,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
       ),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            return formInputs();
-          default:
-            return const Text("Loading...");
-        }
-      },
+      body: FutureBuilder(
+        future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        ),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return formInputs();
+            default:
+              return const Text("Loading...");
+          }
+        },
+      ),
     );
   }
 
@@ -46,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
             const Icon(
               Icons.android,
               size: 140,
@@ -67,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 UsernameField(controller: _usernameInput, hint: "Email"),
                 const SizedBox(height: 20),
-                UsernameField(controller: _passwordInput, hint: "Password"),
+                PasswordField(controller: _passwordInput, hint: "Password"),
                 const SizedBox(height: 20),
                 button(
                   "Login",
@@ -75,8 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     final email = _usernameInput.text;
                     final password = _passwordInput.text;
 
-                    final userCredential = await FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
+                    final userCredential =
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
