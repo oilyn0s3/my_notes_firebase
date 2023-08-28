@@ -54,6 +54,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  void loginLogic() async {
+    final email = _usernameInput.text;
+    final password = _passwordInput.text;
+
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print(userCredential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weal-password') {
+        print("Weak Password");
+      } else if (e.code == 'email-already-in-user') {
+        print("Email is already taken");
+      } else if (e.code == "invalid-email") {
+        print("Invalid Email");
+      }
+    }
+  }
+
   Widget formInputs() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -92,17 +114,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 const SizedBox(height: 20),
                 button(
                   "Register",
-                  () async {
-                    final email = _usernameInput.text;
-                    final password = _passwordInput.text;
-
-                    final userCredential = await FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                    print(userCredential);
-                  },
+                  loginLogic,
                 )
               ],
             )

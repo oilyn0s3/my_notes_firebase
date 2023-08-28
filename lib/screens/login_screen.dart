@@ -54,6 +54,28 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void loginLogic() async {
+    final email = _usernameInput.text;
+    final password = _passwordInput.text;
+
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print(userCredential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("User Not Found");
+      } else if (e.code == 'wrong-password') {
+        print("Password Incorrect");
+      } else {
+        print(e.code);
+      }
+    }
+  }
+
   Widget formInputs() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -86,17 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 button(
                   "Login",
-                  () async {
-                    final email = _usernameInput.text;
-                    final password = _passwordInput.text;
-
-                    final userCredential =
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                    print(userCredential);
-                  },
+                  loginLogic,
                 )
               ],
             )
