@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import '../firebase_options.dart';
 import '../components/components.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -24,34 +22,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Registration",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.purple,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return formInputs();
-            default:
-              return const Text("Loading...");
-          }
-        },
-      ),
-    );
+    return formInputs();
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text(
+    //       "Registration",
+    //       style: TextStyle(
+    //         fontSize: 20,
+    //         fontWeight: FontWeight.bold,
+    //         color: Colors.purple,
+    //       ),
+    //     ),
+    //     centerTitle: true,
+    //     elevation: 0,
+    //     backgroundColor: Colors.white,
+    //   ),
+    //   body: FutureBuilder(
+    //     future: Firebase.initializeApp(
+    //       options: DefaultFirebaseOptions.currentPlatform,
+    //     ),
+    //     builder: (context, snapshot) {
+    //       switch (snapshot.connectionState) {
+    //         case ConnectionState.done:
+    //           return formInputs();
+    //         default:
+    //           return const Text("Loading...");
+    //       }
+    //     },
+    //   ),
+    // );
   }
 
   void loginLogic() async {
