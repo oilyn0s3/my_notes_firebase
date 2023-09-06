@@ -13,36 +13,51 @@ class VerifiyEmailScreen extends StatefulWidget {
 class _VerifiyEmailScreenState extends State<VerifiyEmailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 60),
-          const Icon(
-            Icons.supervised_user_circle,
-            color: mainColor,
-            size: 140,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Email Verification",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.purple,
           ),
-          const SizedBox(height: 60),
-          const Text(
-            "Click the button below to send the Verification Email.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 60),
+            const Icon(
+              Icons.supervised_user_circle,
               color: mainColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+              size: 140,
             ),
-          ),
-          const SizedBox(height: 40),
-          button(
-            "Send Verification Email",
-            () async {
-              final user = FirebaseAuth.instance.currentUser;
-              await user?.sendEmailVerification();
-            },
-          ),
-        ],
+            const SizedBox(height: 60),
+            const Text(
+              "Click the button below to send the Verification Email.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: mainColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 40),
+            button(
+              "Send Verification Email",
+              () async {
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

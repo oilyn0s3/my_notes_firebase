@@ -5,6 +5,7 @@ import 'package:my_notes/firebase_options.dart';
 import 'package:my_notes/screens/login_screen.dart';
 import 'package:my_notes/screens/registration_screen.dart';
 
+import 'screens/notes_screen.dart';
 import 'screens/verify_email_screen.dart';
 
 void main() {
@@ -45,25 +46,21 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
 
             if (user != null) {
-              if (user.emailVerified) {
-                print("Email Verified");
-                return const Text("Done...");
+              if (true) {
+                //user.emailVerified
+                // print("Email Verified");
+                return const NotesScreen();
               } else {
-                print("Email is not verified");
+                // print("Email is not verified");
                 return const VerifiyEmailScreen();
               }
             } else {
-              return const RegistrationScreen();
+              return const LoginScreen();
             }
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => const VerifiyEmailScreen(),
-          //   ),
-          // );
 
+          // return const Text("Done");
           default:
-            print('Loading...');
+            // print('Loading...');
             return const CircularProgressIndicator();
         }
       },
