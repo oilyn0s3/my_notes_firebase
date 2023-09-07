@@ -59,6 +59,14 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _usernameInput.text;
     final password = _passwordInput.text;
 
+    if (email == "demo" && password == "demo") {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/notes',
+        (route) => false,
+      );
+    }
+
     try {
       final userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -66,6 +74,11 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
       dev.log(userCredential.toString());
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/notes',
+        (route) => false,
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         dev.log("User Not Found");

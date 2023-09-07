@@ -23,6 +23,7 @@ class MainApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegistrationScreen(),
+        '/notes': (context) => const NotesScreen(),
       },
       initialRoute: '/',
       // home: const HomePage(), //RegistrationScreen()
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
 
             if (user != null) {
-              if (true) {
+              if (user.emailVerified) {
                 //user.emailVerified
                 // print("Email Verified");
                 return const NotesScreen();
