@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../components/components.dart';
+import 'dart:developer' as dev show log;
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -64,14 +65,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         email: email,
         password: password,
       );
-      print(userCredential);
+      dev.log(userCredential.toString());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weal-password') {
-        print("Weak Password");
+        dev.log("Weak Password");
       } else if (e.code == 'email-already-in-user') {
-        print("Email is already taken");
+        dev.log("Email is already taken");
       } else if (e.code == "invalid-email") {
-        print("Invalid Email");
+        dev.log("Invalid Email");
       }
     }
   }

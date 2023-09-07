@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../components/components.dart';
+import 'dart:developer' as dev show log;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -64,14 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
         email: email,
         password: password,
       );
-      print(userCredential);
+      dev.log(userCredential.toString());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print("User Not Found");
+        dev.log("User Not Found");
       } else if (e.code == 'wrong-password') {
-        print("Password Incorrect");
+        dev.log("Password Incorrect");
       } else {
-        print(e.code);
+        dev.log(e.code);
       }
     }
   }
