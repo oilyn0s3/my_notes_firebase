@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_notes/constants.dart';
 import '../components/components.dart';
 import 'dart:developer' as dev show log;
 
@@ -67,7 +68,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       );
       dev.log(userCredential.toString());
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weal-password') {
+      if (e.code == 'weak-password') {
         dev.log("Weak Password");
       } else if (e.code == 'email-already-in-user') {
         dev.log("Email is already taken");
@@ -139,7 +140,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            '/login',
+                            loginRoute,
                             (route) => false,
                           );
                         },

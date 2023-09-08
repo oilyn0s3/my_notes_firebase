@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_notes/constants.dart';
 import '../components/components.dart';
 import 'dart:developer' as dev show log;
 
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
       dev.log(userCredential.toString());
       Navigator.pushNamedAndRemoveUntil(
         context,
-        '/notes',
+        notesRoute,
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -146,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            '/register',
+                            registerRoute,
                             (route) => false,
                           );
                         },

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_notes/components/components.dart';
 import 'dart:developer' as dev show log;
 
+import 'package:my_notes/constants.dart';
+
 enum MenuAction { logout }
 
 class NotesScreen extends StatefulWidget {
@@ -48,8 +50,8 @@ class _NotesScreenState extends State<NotesScreen> {
                     dev.log(shouldLogout.toString());
                     if (shouldLogout) {
                       await FirebaseAuth.instance.signOut();
-                      Navigator.of(context)
-                          .pushNamedAndRemoveUntil("/login", (route) => false);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          loginRoute, (route) => false);
                     }
                 }
               },
