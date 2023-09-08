@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes/constants.dart';
 import 'package:my_notes/firebase_options.dart';
 import 'package:my_notes/screens/login_screen.dart';
 import 'package:my_notes/screens/registration_screen.dart';
@@ -21,9 +22,9 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => const HomePage(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegistrationScreen(),
-        '/notes': (context) => const NotesScreen(),
+        loginRoute: (context) => const LoginScreen(),
+        registerRoute: (context) => const RegistrationScreen(),
+        notesRoute: (context) => const NotesScreen(),
       },
       initialRoute: '/',
       // home: const HomePage(), //RegistrationScreen()
