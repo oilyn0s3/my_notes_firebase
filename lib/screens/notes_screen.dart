@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_notes/components/components.dart';
 import 'dart:developer' as dev show log;
 
-import 'package:my_notes/constants.dart';
+import '../components/error_dialog.dart';
+import '../constants.dart';
 
 enum MenuAction { logout }
 
@@ -32,6 +33,7 @@ class _NotesScreenState extends State<NotesScreen> {
           backgroundColor: Colors.white,
           actions: [
             PopupMenuButton(
+              color: Colors.purple[100],
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 // side: BorderSide(color: mainColor.withOpacity(0.5)),
@@ -49,9 +51,18 @@ class _NotesScreenState extends State<NotesScreen> {
                     final shouldLogout = await showLogOutAlert(context);
                     dev.log(shouldLogout.toString());
                     if (shouldLogout) {
-                      await FirebaseAuth.instance.signOut();
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          loginRoute, (route) => false);
+                      try {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            loginRoute, (route) => false);
+                      } catch (e) {
+                        await showErrorDialog(
+                          context,
+                          'Logout Error',
+                          "An error occured\n${e.toString()}",
+                        );
+                        // TODO
+                      }
                     }
                 }
               },

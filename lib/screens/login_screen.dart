@@ -4,6 +4,8 @@ import 'package:my_notes/constants.dart';
 import '../components/components.dart';
 import 'dart:developer' as dev show log;
 
+import '../components/error_dialog.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -59,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void loginLogic() async {
     final email = _usernameInput.text;
     final password = _passwordInput.text;
+    const errorTitle = "Login Error";
 
     if (email == "demo" && password == "demo") {
       Navigator.pushNamedAndRemoveUntil(
@@ -83,11 +86,32 @@ class _LoginScreenState extends State<LoginScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         dev.log("User Not Found");
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "User not found, please try again.",
+        );
       } else if (e.code == 'wrong-password') {
         dev.log("Password Incorrect");
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "Incorrect password, please try again.",
+        );
       } else {
         dev.log(e.code);
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "Unexpected Error Occured.\nError Code: ${e.code}",
+        );
       }
+    } catch (e) {
+      await showErrorDialog(
+        context,
+        errorTitle,
+        "Unknown Error\n${e.toString()}",
+      );
     }
   }
 
