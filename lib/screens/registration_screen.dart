@@ -4,6 +4,8 @@ import 'package:my_notes/constants.dart';
 import '../components/components.dart';
 import 'dart:developer' as dev show log;
 
+import '../components/error_dialog.dart';
+
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
@@ -59,6 +61,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void loginLogic() async {
     final email = _usernameInput.text;
     final password = _passwordInput.text;
+    const errorTitle = 'Registration Error';
 
     try {
       final userCredential =
@@ -70,11 +73,38 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         dev.log("Weak Password");
-      } else if (e.code == 'email-already-in-user') {
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "Password is very weak.\nPlease try a password of atleast 8 characters.",
+        );
+      } else if (e.code == 'email-already-in-use') {
         dev.log("Email is already taken");
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "The provided Email is already taken.\nPlease try with a new one or Login.",
+        );
       } else if (e.code == "invalid-email") {
         dev.log("Invalid Email");
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "The provided Email is invalid.\nPlease provide a valid Email address.",
+        );
+      } else {
+        await showErrorDialog(
+          context,
+          errorTitle,
+          "Unknown Error Occured: ${e.code}",
+        );
       }
+    } catch (e) {
+      await showErrorDialog(
+        context,
+        errorTitle,
+        "Unknown Error\n${e.toString()}",
+      );
     }
   }
 

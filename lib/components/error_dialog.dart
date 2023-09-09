@@ -12,7 +12,11 @@ Future<void> showErrorDialog(
     builder: (context) {
       return AlertDialog(
         actionsAlignment: MainAxisAlignment.center,
-        contentPadding: const EdgeInsets.only(top: 20),
+        contentPadding: const EdgeInsets.only(
+          top: 20,
+          left: 20,
+          right: 20,
+        ),
         // actionsPadding: const EdgeInsets.only(bottom: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
