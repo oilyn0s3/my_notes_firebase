@@ -25,6 +25,7 @@ class MainApp extends StatelessWidget {
         loginRoute: (context) => const LoginScreen(),
         registerRoute: (context) => const RegistrationScreen(),
         notesRoute: (context) => const NotesScreen(),
+        verifyRoute: (context) => const VerifiyEmailScreen(),
       },
       initialRoute: '/',
       // home: const HomePage(), //RegistrationScreen()

@@ -70,6 +70,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         password: password,
       );
       dev.log(userCredential.toString());
+      final user = FirebaseAuth.instance.currentUser;
+      await user?.sendEmailVerification();
+      Navigator.pushNamed(context, verifyRoute);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         dev.log("Weak Password");

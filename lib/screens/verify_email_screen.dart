@@ -40,7 +40,7 @@ class _VerifiyEmailScreenState extends State<VerifiyEmailScreen> {
             ),
             const SizedBox(height: 60),
             const Text(
-              "Click the button below to send the Verification Email.",
+              "Verification email has been sent to your email address.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: mainColor,
@@ -49,13 +49,35 @@ class _VerifiyEmailScreenState extends State<VerifiyEmailScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            button(
-              "Send Verification Email",
-              () async {
-                final user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification();
-              },
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Did not recieve the verification email?",
+                  style: TextStyle(
+                      fontSize: 15, color: mainColor.withOpacity(0.8)),
+                ),
+                TextButton(
+                    onPressed: () async {
+                      final user = FirebaseAuth.instance.currentUser;
+                      await user?.sendEmailVerification();
+                    },
+                    child: const Text(
+                      "Click here to resend the verification email!",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.5,
+                          color: mainColor),
+                    )),
+              ],
+            )
+            // button(
+            //   "Send Verification Email",
+            //   () async {
+            //     final user = FirebaseAuth.instance.currentUser;
+            //     await user?.sendEmailVerification();
+            //   },
+            // ),
           ],
         ),
       ),
