@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,7 @@ class HomePage extends StatelessWidget {
         options: DefaultFirebaseOptions.currentPlatform,
       ),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        // return const VerifiyEmailScreen();
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             // return const LoginScreen();

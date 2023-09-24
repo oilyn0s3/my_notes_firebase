@@ -78,11 +78,21 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
       dev.log(userCredential.toString());
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        notesRoute,
-        (route) => false,
-      );
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user?.emailVerified ?? false) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          notesRoute,
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          verifyRoute,
+          (route) => false,
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         dev.log("User Not Found");

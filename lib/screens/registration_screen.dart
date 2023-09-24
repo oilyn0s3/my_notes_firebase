@@ -151,7 +151,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   hint: "Enter your Email",
                 ),
                 const SizedBox(height: 20),
-                UsernameField(
+                PasswordField(
                   controller: _passwordInput,
                   hint: "Enter your Password",
                 ),
